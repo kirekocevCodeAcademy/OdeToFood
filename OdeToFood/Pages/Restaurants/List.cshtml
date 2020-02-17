@@ -48,14 +48,21 @@
                 <a class="btn btn-outline-secondary" asp-page="./Edit" asp-route-restaurantId="@restaurant.Id">
                     <i class="fas fa-edit"></i>
                 </a>
+                <a class="btn btn-outline-secondary" asp-page="./Delete" asp-route-restaurantId="@restaurant.Id">
+                    <i class="fas fa-trash"></i>
+                </a>
             </td>
         </tr>
     }
 </table>
 <a class="btn btn-primary" asp-page="./Edit">Add Restaurant</a>
 
-@section footer{ 
+@if (!string.IsNullOrEmpty(Model.TempMessage))
+{
+    <div class="alert alert-info">@Model.TempMessage</div>
+}
+@section footer{
     <div>
         @Model.Message
-    </div>  
+    </div>
 }

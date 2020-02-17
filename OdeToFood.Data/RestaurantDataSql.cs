@@ -25,6 +25,16 @@ namespace OdeToFood.Data
             return restaurant;
         }
 
+        public Restaurant Delete(int restaurantId)
+        {
+            var tempRestaurant = odeToFoodDbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);
+            if (tempRestaurant != null)
+            {
+                odeToFoodDbContext.Restaurants.Remove(tempRestaurant);
+            }
+            return tempRestaurant;
+        }
+
         public Restaurant GetRestaurantById(int restaurantId)
         {
             return odeToFoodDbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);

@@ -14,8 +14,11 @@ namespace OdeToFood.Pages.Restaurants
     {
         private readonly IConfiguration config;
         private readonly IRestaurantData restaurantData;
-
+        
         public string Message { get; set; }
+
+        [TempData]
+        public string TempMessage { get; set; }
 
         [BindProperty(SupportsGet =true)]
         public string SearchTerm { get; set; }
@@ -30,7 +33,7 @@ namespace OdeToFood.Pages.Restaurants
 
         public void OnGet()
         {
-            Message = $"{config["Message"]} {DateTime.Now}!";
+            Message = $"{config["Message"]} {DateTime.Now.ToShortDateString()}!";
             Restaurants = restaurantData.GetRestaurants(SearchTerm);
         }
     }
