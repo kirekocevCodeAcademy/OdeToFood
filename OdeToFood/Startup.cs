@@ -26,7 +26,7 @@ namespace OdeToFood
         {
             services.AddRazorPages();
             services.AddDbContextPool<OdeToFoodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OdeToFoodDb")));
-            services.AddSingleton<IRestaurantData, RestaurantDataInMemory>();
+            services.AddScoped<IRestaurantData, RestaurantDataSql>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
