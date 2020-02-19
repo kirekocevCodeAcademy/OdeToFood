@@ -47,6 +47,11 @@ namespace OdeToFood.Data
             return 0;
         }
 
+        public int Count()
+        {
+            return restaurants.Count();
+        }
+
         public Restaurant Create(Restaurant restaurant)
         {
             restaurant.Id = restaurants.Max(r => r.Id) + 1;

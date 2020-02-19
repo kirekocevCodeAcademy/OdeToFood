@@ -19,6 +19,11 @@ namespace OdeToFood.Data
             return odeToFoodDbContext.SaveChanges();
         }
 
+        public int Count()
+        {
+            return odeToFoodDbContext.Restaurants.Count();
+        }
+
         public Restaurant Create(Restaurant restaurant)
         {
             odeToFoodDbContext.Restaurants.Add(restaurant);
