@@ -10,7 +10,6 @@ namespace OdeToFood.Models
     {
         public IEnumerable<Restaurant> Restaurants { get; set; }
         public string SearchTerm { get; set; }
-        public string TempMessage { get; set; }
         public string Message { get; set; }
     }
 }

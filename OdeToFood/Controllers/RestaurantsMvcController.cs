@@ -6,8 +6,6 @@ using OdeToFood.Core;
 using OdeToFood.Data;
 using OdeToFood.Models;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace OdeToFood.Controllers
 {
     public class RestaurantsMvcController : Controller
@@ -36,7 +34,7 @@ namespace OdeToFood.Controllers
             var restaurant = restaurantData.GetRestaurantById(restaurantId);
             if (restaurant == null)
             {
-                return View("NotFound");
+                return RedirectToAction("RestaturnatNotFound");
             }
             
             return View(restaurant);
@@ -113,5 +111,9 @@ namespace OdeToFood.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult RestaturnatNotFound()
+        {
+            return View("NotFound");
+        }
     }
 }
