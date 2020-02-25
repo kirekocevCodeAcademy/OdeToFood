@@ -1,0 +1,22 @@
+﻿@model OdeToFood.Core.Restaurant
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h2>@Model.Name from MVC</h2>
+<div>
+    Id: @Model.Id
+</div>
+<div>
+    Location: @Model.Location
+</div>
+<div>
+    Cuisine: @Model.Cuisine
+</div>
+<a asp-controller="RestaurantsMvc" asp-action="Index" class="btn btn-primary">All Restaurants</a>
+
+@if (TempData.Keys.Contains("Message"))
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
