@@ -58,6 +58,10 @@ namespace OdeToFood.Controllers
         public IActionResult Update(RestaurantDto restaurantDto, int id)
         {
             var restaurant = restaurantData.GetRestaurantById(id);
+            if(restaurant == null)
+            {
+                return BadRequest();
+            }
             restaurant.Cuisine = (CuisineType)restaurantDto.Cuisine;
             restaurant.Name = restaurantDto.Name;
             restaurant.Location = restaurantDto.Location;
