@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using OdeToFood.Data;
 
 namespace OdeToFood.Pages.Restaurants
 {
+    [Authorize]
     public class ListModel : PageModel
     {
         private readonly IConfiguration config;

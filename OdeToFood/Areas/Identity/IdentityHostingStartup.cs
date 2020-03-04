@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OdeToFood.Core.Auth;
 using OdeToFood.Data;
 
 [assembly: HostingStartup(typeof(OdeToFood.Areas.Identity.IdentityHostingStartup))]
@@ -15,7 +16,11 @@ namespace OdeToFood.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<OdeToFoodDbContext>();
+                services.AddDefaultIdentity<ApplicationUser>(options=> {
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequiredLength = 4;
+                    options.Password.RequireDigit = false;
+                }).AddEntityFrameworkStores<OdeToFoodDbContext>();
             });
         }
     }

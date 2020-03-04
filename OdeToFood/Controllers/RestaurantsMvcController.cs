@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,7 @@ namespace OdeToFood.Controllers
             return View(model);
         }
 
+        [Authorize]
         public IActionResult Detail(int restaurantId)
         {
             var restaurant = restaurantData.GetRestaurantById(restaurantId);
