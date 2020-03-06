@@ -15,12 +15,16 @@ namespace OdeToFood.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
-                services.AddDefaultIdentity<ApplicationUser>(options=> {
+            builder.ConfigureServices((context, services) =>
+            {
+                services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequiredLength = 4;
                     options.Password.RequireDigit = false;
-                }).AddEntityFrameworkStores<OdeToFoodDbContext>();
+                })
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<OdeToFoodDbContext>();
             });
         }
     }

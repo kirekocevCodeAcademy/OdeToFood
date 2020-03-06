@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OdeToFood.Core.Auth;
@@ -10,7 +6,6 @@ using OdeToFood.Models;
 
 namespace OdeToFood.Controllers
 {
-    [Authorize]
     public class AdminUserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

@@ -11,7 +11,6 @@ using OdeToFood.Data;
 
 namespace OdeToFood.Pages.Restaurants
 {
-    [Authorize]
     public class ListModel : PageModel
     {
         private readonly IConfiguration config;

@@ -29,8 +29,6 @@ namespace OdeToFood.Controllers
             model.Restaurants = restaurantData.GetRestaurants(SearchTerm);
             return View(model);
         }
-
-        [Authorize]
         public IActionResult Detail(int restaurantId)
         {
             var restaurant = restaurantData.GetRestaurantById(restaurantId);
