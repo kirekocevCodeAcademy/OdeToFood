@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,8 +21,14 @@ namespace OdeToFood
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddAuthorization(options =>{options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole("Admin"));});
+
             services.AddMvc();
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorPagesOptions(op =>
+            {
+                op.Conventions.AllowAnonymousToFolder("/Restaurants");
+                op.Conventions.AuthorizePage("/Restaurants/Detail", "RequireAdministratorRole");
+            });
             services.AddDbContextPool<OdeToFoodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OdeToFoodDb")));
             services.AddScoped<IRestaurantData, RestaurantDataSql>();
         }

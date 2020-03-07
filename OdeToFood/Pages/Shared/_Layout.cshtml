@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using OdeToFood.Core.Auth
+@inject SignInManager<ApplicationUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,15 +36,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Adminitration
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="AdminUser">Manage Users</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="AdminRole">Manage Roles</a>
-                            </div>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Adminitration
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="AdminUser">Manage Users</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="AdminRole">Manage Roles</a>
+                                </div>
+                            </li>
+                        }
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -54,7 +62,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">            
+        <div class="container">
             <vc:restaurant-count></vc:restaurant-count>
             @RenderSection("footer", false)
             &copy; 2019 - OdeToFood - <a asp-area="" asp-page="/Privacy">Privacy</a>
