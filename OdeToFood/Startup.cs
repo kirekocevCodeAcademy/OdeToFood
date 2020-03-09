@@ -26,8 +26,10 @@ namespace OdeToFood
             services.AddMvc();
             services.AddRazorPages().AddRazorPagesOptions(op =>
             {
-                op.Conventions.AllowAnonymousToFolder("/Restaurants");
-                op.Conventions.AuthorizePage("/Restaurants/Detail", "RequireAdministratorRole");
+                op.Conventions.AuthorizeFolder("/Restaurants", "RequireAdministratorRole");
+                op.Conventions.AllowAnonymousToPage("/Restaurants/List");
+                op.Conventions.AllowAnonymousToPage("/Restaurants/NotFound");
+                op.Conventions.AllowAnonymousToPage("/Restaurants/Detail");
             });
             services.AddDbContextPool<OdeToFoodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OdeToFoodDb")));
             services.AddScoped<IRestaurantData, RestaurantDataSql>();
