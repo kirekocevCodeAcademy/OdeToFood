@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OdeToFood.Data;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OdeToFood
 {
@@ -33,6 +37,7 @@ namespace OdeToFood
             });
             services.AddDbContextPool<OdeToFoodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OdeToFoodDb")));
             services.AddScoped<IRestaurantData, RestaurantDataSql>();
+            //services.AddScoped<IRestaurantData, RestaurantDataInMemory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,10 +51,15 @@ namespace OdeToFood
             {
                 app.UseExceptionHandler("/Error");
             }
+
             app.UseStaticFiles();      
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.Use(HelloWorld);
+            app.UseMiddleware<CustomMiddleware>();
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -61,6 +71,45 @@ namespace OdeToFood
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private RequestDelegate HelloWorld(RequestDelegate next)
+        {
+            return async httpContext =>
+            {
+                if (httpContext.Request.Path.StartsWithSegments("/helloInLine"))
+                {
+                    await httpContext.Response.WriteAsync("Hello World From InLine!");
+                }
+                else
+                {
+                    await next(httpContext);
+                }
+            };
+
+        }
+    }
+
+    public class CustomMiddleware
+    {
+        private readonly RequestDelegate _next;
+
+        public CustomMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        public async Task Invoke(HttpContext httpContext, IRestaurantData restaurantData)
+        {            
+            if (httpContext.Request.Path.StartsWithSegments("/hello"))
+            {
+                var res = restaurantData.GetRestaurants().ToList();
+                await httpContext.Response.WriteAsync($"Hello World {res.Count}!");
+            }
+            else
+            {
+                await _next(httpContext);
+            }
         }
     }
 }
