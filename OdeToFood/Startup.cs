@@ -27,6 +27,14 @@ namespace OdeToFood
         {
             services.AddAuthorization(options =>{options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole("Admin"));});
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
             services.AddMvc();
             services.AddRazorPages().AddRazorPagesOptions(op =>
             {
@@ -52,6 +60,7 @@ namespace OdeToFood
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseCors("CorsPolicy");
             app.UseStaticFiles();      
             app.UseRouting();
             app.UseAuthentication();
